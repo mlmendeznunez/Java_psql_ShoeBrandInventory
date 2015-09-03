@@ -27,6 +27,7 @@ import java.util.Set;
     //gets Add Book form
     get("/add-book", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
       model.put("template", "templates/newbook.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -37,9 +38,24 @@ import java.util.Set;
       String genre = request.queryParams("genre");
       int copies = Integer.parseInt(request.queryParams("copies"));
 
-      Book newBook = new Book(title, genre, copies);
-      newBook.save();
+      Book book = new Book(title, genre, copies);
+      book.save();
 
+      model.put("authors", Author.all());
+      model.put("book", book); //you may have one object of an array without having the whole array
+      model.put("template", "templates/newbook.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/books/:id/addauthor", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+
+      Author author = Author.find(Integer.parseInt(request.queryParams("author_id"))); //inputing name from html
+      book.addAuthor(author);
+
+      model.put("book", book); //b/c it is rerendered each time, must put in all info
+      model.put("authors", Author.all());
       model.put("template", "templates/newbook.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -47,6 +63,7 @@ import java.util.Set;
     //gets Add Author form
     get("/add-author", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
       model.put("template", "templates/newauthor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -80,15 +97,15 @@ import java.util.Set;
     }, new VelocityTemplateEngine());
 
 
-    get("/authors/:id/addbook", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-
-      Author author = Author.find(Integer.parseInt(request.params(":id")));
-
-      model.put("author", author);
-      model.put("template", "template/newauthors.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+    // get("/authors/:id/addbook", (request, response) -> {
+    //   HashMap<String, Object> model = new HashMap<String, Object>();
+    //
+    //   Author author = Author.find(Integer.parseInt(request.params(":id")));
+    //
+    //   model.put("author", author);
+    //   model.put("template", "templates/newauthor.vtl");
+    //   return new ModelAndView(model, layout);
+    // }, new VelocityTemplateEngine());
 
     post("/authors/:id/addbook", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -101,8 +118,18 @@ import java.util.Set;
       return null;
     });
 
-
-
+    // get("/books/:id/addauthor", (request, response) -> {
+    //   HashMap<String, Object> model = new HashMap<String, Object>();
+    //
+    //   Book book = Book.find(Integer.parseInt(request.params(":id")));
+    //
+    //
+    //   // model.put("book", newBook);
+    //   model.put("books", Book.all());
+    //   model.put("authors", Author.all());
+    //   model.put("template", "templates/newbook.vtl");
+    //   return new ModelAndView(model, layout);
+    // }, new VelocityTemplateEngine());
 
 
 

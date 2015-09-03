@@ -1,3 +1,4 @@
+#if(!($book))
     <h2>Add Book</h2>
 
     <form action="/add-book" method="post">
@@ -15,17 +16,36 @@
       <div class="form-group">
         <label for="copies">Number of copies</label>
         <input id="copies" name="copies" type="text" class="form-control">
-      </div>
+      </div> <!--pass int, not a string, to url-->
 
       <button type="submit">Add</button>
 
     </form>
+#else
+    <h2>New Book Entry: $book.getTitle()</h2>
+      <form action="/books/$book.getId()/addauthor" method="post">
+        <div>
+          <label for="author_id">Add an Author</label>
+          <select id="author_id" name="author_id" type="text">
+            #foreach($author in $authors)
+            <option value="$author.getId()">$author.getName()</option>
+            #end
+          </select>
+          <button type="submit">Add</button>
+        </div>
 
+        <div>
+          <h4>Authors listed for $book.getTitle()</h4>
+          #if($book.getAuthors())
+            <ul>
+            #foreach($inputauthor in $book.getAuthors())
+            <li>$inputauthor.getName()</li>
+            #end
+            </ul>
+          #end
+        </div>
 
+      </form>
 
-
-
-
-
-
-<h3 class="clickable"><center><a href="/adminhome">Home</a></center></h3>
+<h3 class="clickable"><center><a href="/adminhome">Admin Homepage</a></center></h3>
+#end

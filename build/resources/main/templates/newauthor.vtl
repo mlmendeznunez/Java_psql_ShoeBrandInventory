@@ -18,7 +18,7 @@
  <!-- if book already exists in the book list, then author.addBook()
  else -> add this book to the list before we can append it to this author-->
 
-    <h2>Add Books for $author.getName()</h2>
+    <h2>Add $author.getName() to Existing Books</h2>
     <form action="/authors/$author.getId()/addbook" method="post">
       <div>
         <label for="book_id">Select a book</label>
