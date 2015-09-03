@@ -112,6 +112,14 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/all-patrons", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/all-patrons.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
     //render page with form for editing a book in the catalog
     get("/books/:id/editbook", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -193,8 +201,7 @@ import java.util.Set;
 
     get("/authors/:id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      Book book = Book.find(Integer.parseInt(request.params(":id")));
-      book.delete();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
 
       //model.put("book", book);
       model.put("authors", Author.all());
@@ -204,7 +211,7 @@ import java.util.Set;
 
     post("/authors/:id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      Book author = Book.find(Integer.parseInt(request.params(":id")));
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
       author.delete();
 
       //model.put("author", author);
@@ -227,16 +234,36 @@ import java.util.Set;
       Patron patron = new Patron(name);
       patron.save();
 
-      model.put("patron", patron);
-      model.put("patron", Patron.all());
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/admin.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/delete-patron", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      model.put("template", "templates/delete-patron.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/delete-patron", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("name");
+
+      Patron.search(name).delete(); //ask for explanation
+
+      model.put("patrons", Patron.all());
       model.put("template", "templates/admin.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
 
-    // get("/delete-patron", (request, response) -> {
+    // get /patrons/$patron.getId()/editpatron
+    // post
     //
-    // }, )
+    // get /patrons/$patron.getId()/delete
+    // post
+    //
 
 
   }//end of main
