@@ -1,17 +1,30 @@
-<!-- <div class="container">
+<div class="container">
   <div class="row">
-
+    <h1><center>Administrator: Library Catalog</center></h1>
     <h2>Edit $author.getName()</h2>
 
     <form action="/authors/:id/editauthor" method="post">
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input id="name" name="name" type="text" class="form-control">
+        <input id="name" name="name" type="text" class="form-control" value="$author.getName()">
       </div>
 
-      <button type="submit">Edit</button>
+      <div>
+        <label for="book_id">Add a book</label>
+          <select id="book_id" name="book_id" type="text">
+            #foreach($book in $books)
+            <option value="$book.getId()">$book.getTitle()</option>
+            #end
+          </select>
+      </div>
+
+      <button type="submit">Update</button>
 
     </form>
+
+    <center><a href="/all-books">Search books in catalog</a></center>
+    <center><a href="/adminhome">Admin Homepage</a></center>
+
   </div>
-</div> -->
+</div>

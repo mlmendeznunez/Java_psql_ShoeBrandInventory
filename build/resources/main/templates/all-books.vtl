@@ -17,7 +17,7 @@
           <td><a href="/books/$book.getId()">$book.getTitle()</a></td>
           <td>$book.getGenre()</td>
           <td>#foreach($author in $book.getAuthors())
-              <ul>
+              <ul class="list-unstyled">
                 <li>$author.getName()</li>
               </ul>
               #end</td>

@@ -1,47 +1,40 @@
-<h2>Edit $book.getTitle()</h2>
+<div class="container">
+  <div class="row">
+    <h1><center>Administrator: Library Catalog</center></h1>
+    <h2>Edit $book.getTitle()</h2>
 
-  <form action="/books/$book.getId()/editbook" method="post">
+      <form action="/books/$book.getId()/editbook" method="post">
 
-    <div class="form-group">
-      <label for="title">Book Title</label>
-      <input id="title" name="title" type="text" class="form-control" value="$book.getTitle()">
-    </div>
+        <div class="form-group">
+          <label for="title">Book Title</label>
+          <input id="title" name="title" type="text" class="form-control" value="$book.getTitle()">
+        </div>
 
-    <div class="form-group">
-      <label for="genre">Book Genre</label>
-      <input id="genre" name="genre" type="text" class="form-control" value="$book.getGenre()">
-    </div>
+        <div class="form-group">
+          <label for="genre">Book Genre</label>
+          <input id="genre" name="genre" type="text" class="form-control" value="$book.getGenre()">
+        </div>
 
-    <div class="form-group">
-      <label for="copies">Number of copies</label>
-      <input id="copies" name="copies" type="text" class="form-control" value="$book.getCopies()">
-    </div> <!--pass int, not a string, to url-->
+        <div class="form-group">
+          <label for="copies">Number of copies</label>
+          <input id="copies" name="copies" type="text" class="form-control" value="$book.getCopies()">
+        </div> <!--pass int, not a string, to url-->
 
-    <div class="form-group">
-      <label for="author_id">Add an Author</label>
-      <select id="author_id" name="author_id" type="text">
-        #foreach($author in $authors)
-        <option value="$author.getId()">$author.getName()</option>
-        #end
-      </select>
-    </div>
+        <div class="form-group">
+          <label for="author_id">Add an Author</label>
+          <select id="author_id" name="author_id" type="text">
+            #foreach($author in $authors)
+            <option value="$author.getId()">$author.getName()</option>
+            #end
+          </select>
+        </div>
 
-    <button type="submit">Update</button>
+        <button type="submit">Update</button>
 
-  </form>
+      </form>
 
-<!-- <h2>Add Authors for $book.getTitle()</h2>
-  <form action="/books/$book.getId()/editauthor" method="post">
-    <div>
-      <label for="author_id">Add an Author</label>
-      <select id="author_id" name="author_id" type="text">
-        #foreach($author in $authors)
-        <option value="$author.getId()">$author.getName()</option>
-        #end
-      </select>
-      <button type="submit">Add</button>
-    </div>
-  </form>
-  <form action="/books/$book.getId()/addauthor" method="post"> -->
   <center><a href="/all-books">Search books in catalog</a></center>
   <center><a href="/adminhome">Admin Homepage</a></center>
+
+</div>
+</div>

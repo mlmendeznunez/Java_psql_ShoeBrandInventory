@@ -112,4 +112,14 @@ import java.util.ArrayList;
           .executeUpdate();
       }
     }
+
+    public static Patron search(String name) {
+      try(Connection con = DB.sql2o.open()){
+        String sql ="SELECT * FROM patrons WHERE name=:name";
+        Patron patron = con.createQuery(sql)
+        .addParameter("name", name)
+        .executeAndFetchFirst(Patron.class);
+        return patron; }
+    }
+
 }//end Patrons class

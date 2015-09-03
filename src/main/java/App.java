@@ -112,6 +112,7 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //render page with form for editing a book in the catalog
     get("/books/:id/editbook", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
@@ -140,14 +141,102 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // get("/books/:id/delete"
-    // )
+    //render page with form for deleting a book from the catalog
+    get("/books/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
 
-    // get("/authors/$author.getId()/editauthor"
-    //)
+      model.put("book", book);
+      model.put("template", "templates/delete-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-    //get("/authors/$author.getId()/delete"
-    //)
+    //deletes book and renders list of all books in catalog
+    post("/books/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      book.delete();
+
+      //model.put("book", book);
+      model.put("books", Book.all());
+      model.put("template", "templates/all-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    //render page with form for editing an author in the catalog
+    get("/authors/:id/editauthor", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
+
+      model.put("author", author);
+      model.put("books", Book.all());
+      model.put("template", "templates/edit-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    post("/authors/:id/editauthor", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
+      String name = request.queryParams("name");
+
+      author.update(name);
+
+      Book book = Book.find(Integer.parseInt(request.queryParams("book_id")));
+      author.addBook(book);
+
+      model.put("author", author);
+      model.put("authors", Author.all());
+      model.put("template", "template/all-authors.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/authors/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      book.delete();
+
+      //model.put("book", book);
+      model.put("authors", Author.all());
+      model.put("template", "templates/delete-authors.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/authors/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book author = Book.find(Integer.parseInt(request.params(":id")));
+      author.delete();
+
+      //model.put("author", author);
+      model.put("authors", Author.all());
+      model.put("template", "template/all-authors.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/add-patron", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      model.put("template", "templates/add-patron.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/add-patron", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("name");
+
+      Patron patron = new Patron(name);
+      patron.save();
+
+      model.put("patron", patron);
+      model.put("patron", Patron.all());
+      model.put("template", "templates/admin.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    // get("/delete-patron", (request, response) -> {
+    //
+    // }, )
 
 
   }//end of main
