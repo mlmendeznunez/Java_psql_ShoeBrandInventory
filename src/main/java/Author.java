@@ -29,7 +29,7 @@ public class Author {
   }
 
   public static List<Author> all() {
-    String sql = "SELECT * FROM authors";
+    String sql = "SELECT * FROM authors ORDER BY name ASC";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Author.class);
     }
@@ -47,7 +47,7 @@ public class Author {
 
   public static Author find(int id) {
       try(Connection con = DB.sql2o.open()) {
-        String sql = "SELECT * FROM authors WHERE id=:id";
+        String sql = "SELECT * FROM authors WHERE id=:id ORDER BY name ASC";
         Author author = con.createQuery(sql)
           .addParameter("id", id)
           .executeAndFetchFirst(Author.class);

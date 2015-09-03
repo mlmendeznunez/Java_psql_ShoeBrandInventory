@@ -1,3 +1,5 @@
+#if(!($author))
+
 <div class="container">
   <div class="row">
 
@@ -17,18 +19,32 @@
 
  <!-- if book already exists in the book list, then author.addBook()
  else -> add this book to the list before we can append it to this author-->
-
-    <h2>Add $author.getName() to Existing Books</h2>
+ #else
+  <h2>New Author: $author.getName()</h2>
     <form action="/authors/$author.getId()/addbook" method="post">
       <div>
-        <label for="book_id">Select a book</label>
+        <label for="book_id">Authored books: </label>
         <select id="book_id" name="book_id" type="text">
           #foreach($book in $books)
           <option value="$book.getId()">$book.getTitle()</option>
           #end
         </select>
-        <button type="submit">Add book</button>
+        <button type="submit">Add</button>
+      </div>
+
+      <div>
+        <h5><bold>$author.getName()'s books:</bold></h5>
+        #if($author.getBooks())
+        <ul>
+          #foreach($inputbook in $author.getBooks())
+          <li>$inputbook.getTitle()</li>
+          #end
+        </ul>
+        #end
       </div>
     </form>
 
-<h3 class="clickable"><center><a href="/adminhome">Home</a></center></h3>
+<h5 class="clickable"><a href="/adminhome">Admin Homepage</a></h5>
+<h5 class="clickable"><a href="/all-authors">Search Catalog by Author</a></h5>
+
+#end

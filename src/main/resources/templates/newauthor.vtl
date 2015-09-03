@@ -23,7 +23,7 @@
   <h2>New Author: $author.getName()</h2>
     <form action="/authors/$author.getId()/addbook" method="post">
       <div>
-        <label for="book_id">Select a book</label>
+        <label for="book_id">Authored books: </label>
         <select id="book_id" name="book_id" type="text">
           #foreach($book in $books)
           <option value="$book.getId()">$book.getTitle()</option>
@@ -33,7 +33,7 @@
       </div>
 
       <div>
-        <h5>Books authored by $author.getName()</h5>
+        <h5><bold>$author.getName()'s books:</bold></h5>
         #if($author.getBooks())
         <ul>
           #foreach($inputbook in $author.getBooks())
@@ -44,7 +44,7 @@
       </div>
     </form>
 
-<h3 class="clickable"><a href="/adminhome">Admin Homepage</a></h3>
-<h3 class="clickable"><a href="/all-books">Book Catalog</a></h3>
+<h5 class="clickable"><a href="/adminhome">Admin Homepage</a></h5>
+<h5 class="clickable"><a href="/all-authors">Search Catalog by Author</a></h5>
 
 #end

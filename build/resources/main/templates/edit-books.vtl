@@ -1,32 +1,47 @@
-<h2>Edit $student.getName()</h2>
+<h2>Edit $book.getTitle()</h2>
 
-  <form action="/student/$student.getId()/edit" method="post">
+  <form action="/books/$book.getId()/editbook" method="post">
 
     <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" name="name" type="text" class="form-control">
+      <label for="title">Book Title</label>
+      <input id="title" name="title" type="text" class="form-control" value="$book.getTitle()">
     </div>
 
     <div class="form-group">
-      <label for="enrollment">Enrollment</label>
-      <input id="enrollment" name="enrollment" type="date" class="form-control">
+      <label for="genre">Book Genre</label>
+      <input id="genre" name="genre" type="text" class="form-control" value="$book.getGenre()">
     </div>
 
+    <div class="form-group">
+      <label for="copies">Number of copies</label>
+      <input id="copies" name="copies" type="text" class="form-control" value="$book.getCopies()">
+    </div> <!--pass int, not a string, to url-->
 
-    <button type="submit">Add</button>
-
-  </form>
-
-<h2>Add Courses for $student.getName()</h2>
-  <form action="/students/$student.getId()/addcourse" method="post">
-    <div>
-      <label for="course_id">Select a course</label>
-      <select id="course_id" name="course_id" type="text">
-        #foreach($course in $courses)
-        <option value="$course.getId()">$course.getCourseName()</option>
+    <div class="form-group">
+      <label for="author_id">Add an Author</label>
+      <select id="author_id" name="author_id" type="text">
+        #foreach($author in $authors)
+        <option value="$author.getId()">$author.getName()</option>
         #end
       </select>
-      <button type="submit">Add course</button>
+    </div>
+
+    <button type="submit">Update</button>
+
+  </form>
+
+<!-- <h2>Add Authors for $book.getTitle()</h2>
+  <form action="/books/$book.getId()/editauthor" method="post">
+    <div>
+      <label for="author_id">Add an Author</label>
+      <select id="author_id" name="author_id" type="text">
+        #foreach($author in $authors)
+        <option value="$author.getId()">$author.getName()</option>
+        #end
+      </select>
+      <button type="submit">Add</button>
     </div>
   </form>
-<center><a href="/">Home</a></center>
+  <form action="/books/$book.getId()/addauthor" method="post"> -->
+  <center><a href="/all-books">Search books in catalog</a></center>
+  <center><a href="/adminhome">Admin Homepage</a></center>

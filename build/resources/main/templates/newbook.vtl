@@ -22,7 +22,7 @@
 
     </form>
 #else
-    <h2>New Book Entry: $book.getTitle()</h2>
+    <h2>New Book: $book.getTitle()</h2>
       <form action="/books/$book.getId()/addauthor" method="post">
         <div>
           <label for="author_id">Add an Author</label>
@@ -35,7 +35,7 @@
         </div>
 
         <div>
-          <h4>Authors listed for $book.getTitle()</h4>
+          <h5>Authors added for $book.getTitle()</h5>
           #if($book.getAuthors())
             <ul>
             #foreach($inputauthor in $book.getAuthors())
@@ -47,5 +47,6 @@
 
       </form>
 
-<h3 class="clickable"><center><a href="/adminhome">Admin Homepage</a></center></h3>
+<h3 class="clickable"><a href="/adminhome">Admin Homepage</a></h3>
+<h3 class="clickable"><a href="/all-books">Book Catalog</a></h3>
 #end

@@ -68,18 +68,33 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-
+    //renders input for Add Author form and displays Add book to author form
     post("/add-author", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("name");
 
-      Author newAuthor = new Author(name);
-      newAuthor.save();
+      Author author = new Author(name);
+      author.save();
 
+      model.put("author", author);
+      model.put("books", Book.all());
       model.put("template", "templates/newauthor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    //re-renders Add book to author form so author can be added to multiple books
+    post("/authors/:id/addbook", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
+
+      Book book = Book.find(Integer.parseInt(request.queryParams("book_id")));
+      author.addBook(book);
+
+      model.put("author", author);
+      model.put("books", Book.all());
+      model.put("template", "templates/newauthor.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
     //Get page to view and update authors in db
     get("/all-authors", (request, response) -> {
@@ -91,49 +106,48 @@ import java.util.Set;
 
     get("/all-books", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
       model.put("books", Book.all());
       model.put("template", "templates/all-books.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-
-    // get("/authors/:id/addbook", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //
-    //   Author author = Author.find(Integer.parseInt(request.params(":id")));
-    //
-    //   model.put("author", author);
-    //   model.put("template", "templates/newauthor.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-
-    post("/authors/:id/addbook", (request, response) -> {
+    get("/books/:id/editbook", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      Author author = Author.find(Integer.parseInt(request.params(":id")));
-      int bookId = Integer.parseInt(request.queryParams("book_id"));
-      Book newBook = Book.find(bookId);
-      author.addBook(newBook);
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
 
-      response.redirect("/authors/" + author.getId() + "/addbook");
-      return null;
-    });
+      model.put("book", book);
+      model.put("authors", Author.all());
+      model.put("template", "templates/edit-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-    // get("/books/:id/addauthor", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //
-    //   Book book = Book.find(Integer.parseInt(request.params(":id")));
-    //
-    //
-    //   // model.put("book", newBook);
-    //   model.put("books", Book.all());
-    //   model.put("authors", Author.all());
-    //   model.put("template", "templates/newbook.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    post("/books/:id/editbook", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      String title = request.queryParams("title");
+      String genre = request.queryParams("genre");
+      int copies = Integer.parseInt(request.queryParams("copies"));
 
+      book.update(title, genre, copies);
 
+      Author author = Author.find(Integer.parseInt(request.queryParams("author_id"))); //inputing name from html
+      book.addAuthor(author);
 
+      model.put("book", book);
+      model.put("books", Book.all());
+      model.put("template", "templates/all-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
+    // get("/books/:id/delete"
+    // )
+
+    // get("/authors/$author.getId()/editauthor"
+    //)
+
+    //get("/authors/$author.getId()/delete"
+    //)
 
 
   }//end of main

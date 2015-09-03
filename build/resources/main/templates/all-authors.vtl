@@ -1,12 +1,14 @@
 <div class="container">
   <div class="row">
   <h1><center>Administrator: Library Catalog</center></h1>
-  <h2>Search Authors</h2>
+  <h2>Search All Authors</h2>
 
 
     <table border="1" class="table table-striped">
       <th>Name</th>
-      <th>Books</th>
+      <th>Books Authored</th>
+      <th>Edit</th>
+      <th>Delete</th>
 
       <tbody>
         #foreach($author in $authors) <!--authors calls author.all()-->
@@ -19,6 +21,8 @@
               </ul>
             #end
           </td>
+          <td><a href="/authors/$author.getId()/editauthor"><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="/authors/$author.getId()/delete"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
         #end
       </tbody>

@@ -1,26 +1,29 @@
 <div class="container">
   <div class="row">
   <h1><center>Administrator: Library Catalog</center></h1>
-  <h2>All Books</h2>
+  <h2>Search All Books</h2>
 
     <table border="1" class="table table-striped">
       <th>Title</th>
       <th>Genre</th>
       <th>Author(s)</th>
       <th>Copies</th>
+      <th>Edit</th>
+      <th>Delete</th>
 
       <tbody>
         #foreach($book in $books) <!--books calls book.all()-->
         <tr>
           <td><a href="/books/$book.getId()">$book.getTitle()</a></td>
           <td>$book.getGenre()</td>
-          <td>
-            #foreach($author in $book.getAuthors())
+          <td>#foreach($author in $book.getAuthors())
               <ul>
                 <li>$author.getName()</li>
               </ul>
-            #end
-          </td>
+              #end</td>
+          <td>$book.getCopies()</td>
+          <td><a href="/books/$book.getId()/editbook"><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="/books/$book.getId()/delete"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
         #end
       </tbody>

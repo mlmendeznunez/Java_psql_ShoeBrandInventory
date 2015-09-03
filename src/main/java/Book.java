@@ -44,7 +44,7 @@ public class Book {
   }
 
   public static List<Book> all() {
-    String sql = "SELECT id, title, genre, copies FROM books";
+    String sql = "SELECT id, title, genre, copies FROM books ORDER BY title ASC";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Book.class);
     }
@@ -64,7 +64,7 @@ public class Book {
 
   public static Book find(int id) {
     try(Connection con = DB.sql2o.open()){
-      String sql ="SELECT * FROM books WHERE id=:id";
+      String sql ="SELECT * FROM books WHERE id=:id ORDER BY title ASC";
       Book book = con.createQuery(sql)
       .addParameter("id", id)
       .executeAndFetchFirst(Book.class);
