@@ -252,20 +252,54 @@ import java.util.Set;
 
       Patron.search(name).delete(); //ask for explanation
 
-      model.put("patrons", Patron.all());
       model.put("template", "templates/admin.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/patrons/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Patron patron = Patron.find(Integer.parseInt(request.params(":id")));
 
-    // get /patrons/$patron.getId()/editpatron
-    // post
-    //
-    // get /patrons/$patron.getId()/delete
-    // post
-    //
+      //model.put("book", book);
+      model.put("patron", patron);
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/delete-patronsearchpg.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
+    post("/patrons/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Patron patron = Patron.find(Integer.parseInt(request.params(":id")));
 
+      patron.delete();
+
+      //model.put("author", author);
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/all-patrons.vtl");
+      return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+    get("/patrons/:id/editpatron", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Patron patron = Patron.find(Integer.parseInt(request.params(":id")));
+
+      model.put("patron", patron);
+      model.put("template", "templates/edit-books.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/authors/:id/editauthor", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Author author = Author.find(Integer.parseInt(request.params(":id")));
+      String name = request.queryParams("patronname");
+
+      patron.update(name);
+
+      model.put("patron", patron);
+      model.put("authors", Patron.all());
+      model.put("template", "template/all-patrons.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }//end of main
 
 }//end of app

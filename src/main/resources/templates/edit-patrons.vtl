@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <h1>Administrator: Library Catalog</h1>
+    <h2>Edit $patron.getPatronName()</h2>
+
+    <form action="/patrons/:id/editpatron" method="post">
+
+      <div class="form-group">
+        <label for="patronname">Name</label>
+        <input id="patronname" name="patronname" type="text" class="form-control" value="$author.getName()">
+      </div>
+
+      <button type="submit">Update</button>
+
+    </form>
+
+    <center><a href="/adminhome">Admin Homepage</a></center>
+
+  </div>
+</div>
