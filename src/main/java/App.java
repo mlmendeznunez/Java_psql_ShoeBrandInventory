@@ -223,7 +223,7 @@ import java.util.Set;
     get("/add-patron", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
-      model.put("template", "templates/add-patron.vtl");
+      model.put("template", "templates/newpatron.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -288,18 +288,19 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/authors/:id/editauthor", (request, response) -> {
+    post("/patrons/:id/editpatron", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      Author author = Author.find(Integer.parseInt(request.params(":id")));
+      Patron patron = Patron.find(Integer.parseInt(request.params(":id")));
       String name = request.queryParams("patronname");
 
       patron.update(name);
 
       model.put("patron", patron);
-      model.put("authors", Patron.all());
+      model.put("patrons", Patron.all());
       model.put("template", "template/all-patrons.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
   }//end of main
 
 }//end of app
