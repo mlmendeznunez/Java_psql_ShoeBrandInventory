@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <h1><center>Administrator: Library Catalog</center></h1>
+    <h2>Edit $store.getStoreName()</h2>
+
+    <form action="/stores/:id/editstore" method="post">
+
+      <div class="form-group">
+        <label for="store_name">Name</label>
+        <input id="store_name" name="store_name" type="text" class="form-control" value="$store.getStoreName()">
+      </div>
+
+      <div>
+        <label for="brand_id">Add a brand</label>
+          <select id="brand_id" name="brand_id" type="text">
+            #foreach($brand in $brands)
+            <option value="$brand.getId()">$brand.getBrand()</option>
+            #end
+          </select>
+      </div>
+
+      <button type="submit">Update</button>
+
+    </form>
+
+    <center><a href="/all-brands">Search brands in catalog</a></center>
+    <center><a href="/">Homepage</a></center>
+
+  </div>
+</div>

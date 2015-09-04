@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+  <h1><center>Administrator: Library Catalog</center></h1>
+  <h2>Search All Stores</h2>
+
+
+    <table border="1" class="table table-striped">
+      <th>Store</th>
+      <th>Brands</th>
+      <th>Edit Store Name</th>
+      <th>Delete Store</th>
+
+      <tbody>
+        #foreach($store in $stores) <!--stores calls store.all()-->
+        <tr>
+          <td><a href="/stores/$store.getId()">$store.getStoreName()</a></td>
+          <td>
+            #foreach($brand in $store.getBrands())
+              <ul>
+                <li>$brand.getBrand()</li>
+              </ul>
+            #end
+          </td>
+          <td><a href="/stores/$store.getId()/editstore"><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="/stores/$store.getId()/delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+        #end
+      </tbody>
+    </table>
+
+center><a href="/">Home</a></center>

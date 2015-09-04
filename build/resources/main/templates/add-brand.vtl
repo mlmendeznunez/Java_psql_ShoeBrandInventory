@@ -1,0 +1,42 @@
+#if(!($brand))
+    <h2>Add Shoe Brand</h2>
+
+    <form action="/add-brand" method="post">
+
+      <div class="form-group">
+        <label for="brand_name">Brand</label>
+        <input id="brand_name" name="brand_name" type="text" class="form-control">
+      </div>
+
+      <button type="submit">Add</button>
+
+    </form>
+#else
+    <h2>New Brand: $brand.getBrand()</h2>
+      <form action="/brands/$brand.getId()/addstore" method="post">
+        <div>
+          <label for="store_id">Add a Store</label>
+          <select id="store_id" name="store_idd" type="text">
+            #foreach($store in $stores)
+            <option value="$store.getId()">$store.getStoreName()</option>
+            #end
+          </select>
+          <button type="submit">Add</button>
+        </div>
+
+        <div>
+          <h5>Stores added for $brand.getBrand()</h5>
+          #if($brand.getStores())
+            <ul>
+            #foreach($inputstore in $brand.getStores())
+            <li>$inputstore.getStoreName()</li>
+            #end
+            </ul>
+          #end
+        </div>
+
+      </form>
+
+<h3 class="clickable"><a href="/">Homepage</a></h3>
+<h3 class="clickable"><a href="/all-shoes">Book Catalog</a></h3>
+#end

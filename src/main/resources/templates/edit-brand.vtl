@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <h1><center>Administrator: Library Catalog</center></h1>
+    <h2>Edit $brand.getTitle()</h2>
+
+      <form action="/brands/$brand.getId()/editbrand" method="post">
+
+        <div class="form-group">
+          <label for="brand_name">Brand</label>
+          <input id="brand_name" name="brand_name" type="text" class="form-control" value="$brand.getBrand()">
+        </div>
+
+        <button type="submit">Update</button>
+
+      </form>
+
+  <center><a href="/all-brands">Search books in catalog</a></center>
+  <center><a href="/">Homepage</a></center>
+
+  </div>
+</div>

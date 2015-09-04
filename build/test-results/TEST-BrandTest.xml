@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BrandTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2015-09-04T18:18:05" hostname="epicodus-115.local" time="0.212">
+  <properties/>
+  <testcase name="update_updatesBrandNameInDatabase_true" classname="BrandTest" time="0.119"/>
+  <testcase name="equals_returnsTrueIfBrandsAreTheSame" classname="BrandTest" time="0.005"/>
+  <testcase name="save_savesBrandIntoDatabase_true" classname="BrandTest" time="0.015"/>
+  <testcase name="all_emptyAtFirst" classname="BrandTest" time="0.009"/>
+  <testcase name="find_findsBrandInDatabase_true" classname="BrandTest" time="0.017"/>
+  <testcase name="delete_deletesBrandsAndListAssociations" classname="BrandTest" time="0.03"/>
+  <testcase name="getStores_returnsAllStores_List" classname="BrandTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

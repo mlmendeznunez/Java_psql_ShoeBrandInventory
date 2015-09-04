@@ -1,0 +1,47 @@
+#if(!($author))
+
+<div class="container">
+  <div class="row">
+
+    <h2>Add Store</h2>
+
+    <form action="/add-store" method="post">
+
+      <div class="form-group">
+        <label for="store_name">Name</label>
+        <input id="store_name" name="store_name" type="text" class="form-control">
+      </div>
+
+      <button type="submit">Add</button>
+
+    </form>
+
+ #else
+  <h2>New Store: $store.getStoreName()</h2>
+    <form action="/stores/$store.getId()/addbrand" method="post">
+      <div>
+        <label for="brand_id">Brands in inventory: </label>
+        <select id="brand_id" name="brand_id" type="text">
+          #foreach($brand in $brands)
+          <option value="$brand.getId()">$brand.getBrand()</option>
+          #end
+        </select>
+        <button type="submit">Add</button>
+      </div>
+
+      <div>
+        <h5><bold>$store.getStoreName()'s brands:</bold></h5>
+        #if($store.getBrands())
+        <ul>
+          #foreach($inputbrand in $store.getBrands())
+          <li>$inputbrand.getBrand()</li>
+          #end
+        </ul>
+        #end
+      </div>
+    </form>
+
+<h5 class="clickable"><a href="/"> Homepage</a></h5>
+<h5 class="clickable"><a href="/all-authors">Search Catalog by Store</a></h5>
+
+#end
