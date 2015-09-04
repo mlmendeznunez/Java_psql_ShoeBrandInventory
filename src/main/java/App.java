@@ -17,7 +17,7 @@ import java.util.Set;
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-        //gets Add Brand Form
+    //gets Add Brand Form
     get("/add-brand", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/add-brand.vtl");
@@ -32,8 +32,9 @@ import java.util.Set;
       brand.save();
 
       model.put("brand", brand);
+      model.put("brandStores", null);
       model.put("stores", Store.all());
-      model.put("template", "templates/add-brand.vtl");
+      model.put("template", "templates/add-brand.add-store.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -44,9 +45,11 @@ import java.util.Set;
       Store store = Store.find(Integer.parseInt(request.queryParams("store_id"))); //inputing name from html
       brand.addStore(store);
 
+
       model.put("brand", brand); //b/c it is rerendered each time, must put in all info
+      model.put("brandStores", brand.getStores());
       model.put("stores", Store.all());
-      model.put("template", "templates/newbook.vtl");
+      model.put("template", "templates/add-brand.add-store.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -65,21 +68,25 @@ import java.util.Set;
       Store newStore = new Store(store_name);
       newStore.save();
 
-      model.put("template", "templates/new-store.vtl");
+      model.put("storeBrands", null);
+      model.put("store", newStore);
+      model.put("brands", Brand.all());
+      model.put("template", "templates/add-store.add-brand.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     //re-renders Add book to author form so author can be added to multiple books
-    post("/stores/:id/addbook", (request, response) -> {
+    post("/stores/:id/addbrand", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Store store = Store.find(Integer.parseInt(request.params(":id")));
 
       Brand brand = Brand.find(Integer.parseInt(request.queryParams("brand_id")));
       store.addBrand(brand);
 
+      model.put("storeBrands", store.getBrands());
       model.put("store", store);
       model.put("brands", Brand.all());
-      model.put("template", "templates/new-store.vtl");
+      model.put("template", "templates/add-store.add-brand.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -94,7 +101,7 @@ import java.util.Set;
     //Get page to view and update brands in db
     get("/all-brands", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("books", Brand.all());
+      model.put("brands", Brand.all());
       model.put("template", "templates/all-brands.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -106,7 +113,7 @@ import java.util.Set;
 
       model.put("brand", brand);
       model.put("stores", Store.all());
-      model.put("template", "templates/edit-brands.vtl");
+      model.put("template", "templates/edit-brand.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -117,10 +124,7 @@ import java.util.Set;
 
       brand.update(brand_name);
 
-      Store store = Store.find(Integer.parseInt(request.queryParams("store_id"))); //inputing name from html
-      brand.addStore(store);
-
-      model.put("brand", brand);
+      //model.put("brand", brand);
       model.put("brands", Brand.all());
       model.put("template", "templates/all-brands.vtl");
       return new ModelAndView(model, layout);
@@ -132,7 +136,7 @@ import java.util.Set;
       Brand brand = Brand.find(Integer.parseInt(request.params(":id")));
 
       model.put("brand", brand);
-      model.put("template", "templates/delete-brands.vtl");
+      model.put("template", "templates/delete-brand.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -154,7 +158,7 @@ import java.util.Set;
 
       model.put("store", store);
       model.put("brands", Brand.all());
-      model.put("template", "templates/edit-books.vtl");
+      model.put("template", "templates/edit-stores.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -164,12 +168,9 @@ import java.util.Set;
       String store_name = request.queryParams("store_name");
       store.update(store_name);
 
-      Brand brand = Brand.find(Integer.parseInt(request.queryParams("brand_id")));
-      store.addBrand(brand);
-
       model.put("store", store);
       model.put("stores", Store.all());
-      model.put("template", "template/all-stores.vtl");
+      model.put("template", "templates/all-stores.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -177,7 +178,7 @@ import java.util.Set;
       HashMap<String, Object> model = new HashMap<String, Object>();
       Store store = Store.find(Integer.parseInt(request.params(":id")));
 
-      model.put("stores", Store.all());
+      model.put("store", store);
       model.put("template", "templates/delete-stores.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -188,7 +189,7 @@ import java.util.Set;
       store.delete();
 
       model.put("stores", Store.all());
-      model.put("template", "template/all-stores.vtl");
+      model.put("template", "templates/all-stores.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

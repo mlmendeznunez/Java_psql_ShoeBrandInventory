@@ -1,18 +1,5 @@
-<div class="container">
-  <div class="row">
-    <h2>Edit $store.getStoreName()</h2>
-
-    <form action="/stores/$store.getId()/editstore" method="post">
-
-      <div class="form-group">
-        <label for="store_name">Name</label>
-        <input id="store_name" name="store_name" type="text" class="form-control" value="$store.getStoreName()">
-      </div>
-
-      <button type="submit" id="update">Update</button>
-
-    </form>
-
+  <!-- POST /add-store -->
+  <h2>New Store: $store.getStoreName()</h2>
     <form action="/stores/$store.getId()/addbrand" method="post">
       #if ($stores.size()==0)
           <p>You cannot add your brand to a store yet. No stores exist. </p>
@@ -25,7 +12,7 @@
             <option value="$brand.getId()">$brand.getBrand()</option>
             #end
           </select>
-          <button type="submit" id="add">Add</button>
+          <button type="submit" id="submit">Add</button>
         </div>
 
         #if($storeBrands)
@@ -41,9 +28,6 @@
       #end
     </form>
 
-    <center><a href="/all-brands">Search brands in catalog</a></center>
-    <center><a href="/">Homepage</a></center>
 
-  </div>
-
-</div>
+<h5 class="clickable"><a href="/"> Homepage</a></h5>
+<h5 class="clickable"><a href="/all-authors">Search Catalog by Store</a></h5>

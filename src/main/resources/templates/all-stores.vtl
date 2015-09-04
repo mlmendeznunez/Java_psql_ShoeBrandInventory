@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-  <h1><center>Administrator: Library Catalog</center></h1>
   <h2>Search All Stores</h2>
 
 
@@ -13,7 +12,7 @@
       <tbody>
         #foreach($store in $stores) <!--stores calls store.all()-->
         <tr>
-          <td><a href="/stores/$store.getId()">$store.getStoreName()</a></td>
+          <td><a href="/stores/$store.getId()/addbrand">$store.getStoreName()</a></td>
           <td>
             #foreach($brand in $store.getBrands())
               <ul>
@@ -28,4 +27,4 @@
       </tbody>
     </table>
 
-center><a href="/">Home</a></center>
+<center><a href="/">Home</a></center>

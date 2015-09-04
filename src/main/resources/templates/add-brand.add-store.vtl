@@ -1,19 +1,5 @@
-<div class="container">
-  <div class="row">
-    <h2>Edit $brand.getBrand()</h2>
-
-      <form action="/brands/$brand.getId()/editbrand" method="post">
-
-        <div class="form-group">
-          <label for="brand_name">Brand</label>
-          <input id="brand_name" name="brand_name" type="text" class="form-control" value="$brand.getBrand()">
-        </div>
-
-        <button type="submit" id="update">Update</button>
-
-      </form>
-
-
+<!-- POST /add-brand -->
+    <h2>New Brand: $brand.getBrand()</h2>
       <form action="/brands/$brand.getId()/addstore" method="post">
         #if ($stores.size()==0)
           <p>You cannot add your brand to a store yet. No stores exist. </p>
@@ -26,7 +12,7 @@
               <option value="$store.getId()">$store.getStoreName()</option>
               #end
             </select>
-            <button type="submit" id="add">Add</button>
+            <button type="submit" id="submit">Add</button>
           </div>
 
           #if($brandStores)
@@ -40,10 +26,7 @@
           </div>
           #end
         #end
+
       </form>
 
-  <center><a href="/all-brands">Search brands</a></center>
-  <center><a href="/">Homepage</a></center>
-
-  </div>
-</div>
+      <h5 class="clickable"><a href="/"> Homepage</a></h5>

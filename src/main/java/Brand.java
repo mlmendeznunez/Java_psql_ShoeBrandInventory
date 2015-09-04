@@ -84,20 +84,24 @@ public ArrayList<Store> getStores() {
   try(Connection con = DB.sql2o.open()) {
     String sql = "SELECT store_id FROM stores_brands WHERE brand_id=:brand_id";
     List<Integer> storeIds = con.createQuery(sql)
-    .addParameter("book_id", this.getId())
+    .addParameter("brand_id", this.getId())
     .executeAndFetch(Integer.class);
+    if(storeIds == null)
+      return null;
 
     //declare empty array to push all students ids that match to the courseid
     ArrayList<Store> stores = new ArrayList<Store>();
 
     //looping through the student index in order to grab all students that match course_id
+    
     for(Integer index : storeIds) { //for index in student Ids
       String storeQuery = "SELECT * FROM stores WHERE Id = :index";
       Store store = con.createQuery(storeQuery)
         .addParameter("index", index)
         .executeAndFetchFirst(Store.class);
         stores.add(store);
-    }return stores;
+    }
+    return stores;
   }
 }
 

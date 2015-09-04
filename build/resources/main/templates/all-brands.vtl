@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-  <h1><center>Administrator: Library Catalog</center></h1>
   <h2>Search All Brands</h2>
 
     <table border="1" class="table table-striped">
@@ -8,18 +7,17 @@
       <th>Stores</th>
       <th>Edit</th>
       <th>Delete</th>
-
       <tbody>
         #foreach($brand in $brands) <!--brands calls brand.all()-->
         <tr>
-          <td><a href="/brands/$brand.getId()">$brand.getBrand()</a></td>
+          <td><a href="/brands/$brand.getId()/addstore">$brand.getBrand()</a></td>
           <td>#foreach($store in $brand.getStores())
               <ul class="list-unstyled">
                 <li>$store.getStoreName()</li>
               </ul>
               #end</td>
-          <td><a href="/brands/$brand.getId()/editbrand"><span class="glyphicon glyphicon-pencil"></span></a></td>
-          <td><a href="/brands/$brand.getId()/delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+          <td><a href="/brands/$brand.getId()/editbrand" name="edit"><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="/brands/$brand.getId()/delete" name="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
         #end
       </tbody>

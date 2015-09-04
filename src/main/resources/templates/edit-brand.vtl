@@ -1,7 +1,6 @@
 <div class="container">
   <div class="row">
-    <h1><center>Administrator: Library Catalog</center></h1>
-    <h2>Edit $brand.getTitle()</h2>
+    <h2>Edit $brand.getBrand()</h2>
 
       <form action="/brands/$brand.getId()/editbrand" method="post">
 
@@ -10,11 +9,40 @@
           <input id="brand_name" name="brand_name" type="text" class="form-control" value="$brand.getBrand()">
         </div>
 
-        <button type="submit">Update</button>
+        <button type="submit" id="update">Update</button>
 
       </form>
 
-  <center><a href="/all-brands">Search books in catalog</a></center>
+
+      <form action="/brands/$brand.getId()/addstore" method="post">
+        #if ($stores.size()==0)
+          <p>You cannot add your brand to a store yet. No stores exist. </p>
+
+        #else 
+          <div>
+            <label for="store_id">Add a Store</label>
+            <select id="store_id" name="store_id" type="text">
+              #foreach($store in $stores)
+              <option value="$store.getId()">$store.getStoreName()</option>
+              #end
+            </select>
+            <button type="submit" id="add">Add</button>
+          </div>
+
+          #if($brandStores)
+          <div>
+            <h5>Stores added for $brand.getBrand()</h5>
+              <ul>
+              #foreach($inputstore in $brandStores)
+              <li>$inputstore.getStoreName()</li>
+              #end
+              </ul>
+          </div>
+          #end
+        #end
+      </form>
+
+  <center><a href="/all-brands">Search brands</a></center>
   <center><a href="/">Homepage</a></center>
 
   </div>
